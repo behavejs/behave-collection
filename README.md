@@ -51,7 +51,7 @@ var filteredModels = collection.filter(m => m.get().get('some') === 'value');
 
 /* quick extraction of collection data */
 collection.toJS();
-// => [ some: 'value'  }, { another: 'value' }, { arr: [1, 2, 3] }]
+// => [{ some: 'value'  }, { another: 'value' }, { arr: [1, 2, 3] }]
 
 collection.toJSON();
 // => [{ "some": "value" }, { "another": "value" }, { "arr": [1, 2, 3] }]
