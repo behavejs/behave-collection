@@ -81,6 +81,18 @@ class BehaveCollection extends BehaveEvents {
         return this;
     }
 
+    count() {
+        return this.models.length;
+    }
+
+    at(idx) {
+        return this.models.slice(idx, idx + 1)[0] || undefined;
+    }
+
+    range(startIdx, endIdx) {
+        return this.models.slice(startIdx, endIdx + 1);
+    }
+
     find(params) {
         var testDeepMatch = matches(params);
         return filter(this.models, (m) => {

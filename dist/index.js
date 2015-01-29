@@ -131,6 +131,30 @@ var BehaveCollection = (function (BehaveEvents) {
       enumerable: true,
       configurable: true
     },
+    count: {
+      value: function count() {
+        return this.models.length;
+      },
+      writable: true,
+      enumerable: true,
+      configurable: true
+    },
+    at: {
+      value: function at(idx) {
+        return this.models.slice(idx, idx + 1)[0] || undefined;
+      },
+      writable: true,
+      enumerable: true,
+      configurable: true
+    },
+    range: {
+      value: function range(startIdx, endIdx) {
+        return this.models.slice(startIdx, endIdx + 1);
+      },
+      writable: true,
+      enumerable: true,
+      configurable: true
+    },
     find: {
       value: function find(params) {
         var testDeepMatch = matches(params);

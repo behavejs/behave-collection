@@ -1,3 +1,5 @@
+/* jshint maxstatements:20 */
+
 import BehaveCollection from '../../src/index';
 import sinon from 'sinon';
 
@@ -162,6 +164,106 @@ describe('BehaveCollection', () => {
 
             this.collection.remove(1, { silent: true });
             expect(spy.callCount).toBe(1);
+            done();
+        });
+    });
+
+    describe('.range(startIdx, endIdx)', () => {
+        beforeEach(() => {
+            this.model1 = modelBuilder({a: 1});
+            this.model2 = modelBuilder({a: 1});
+            this.model3 = modelBuilder({b: 1});
+        });
+
+        it('should be defined', (done) => {
+            expect(this.collection.range).toBeDefined();
+            done();
+        });
+
+        it('should return range of models, including end index model', (done) => {
+            this.collection.batch([
+                this.model1,
+                this.model2,
+                this.model3
+            ]);
+
+            var models = this.collection.range(0, 1);
+            expect(models.length).toBe(2);
+            expect(models[0]._id).toBe(0);
+            expect(models[1]._id).toBe(1);
+            done();
+        });
+
+        it('should return an empty array if no matches', (done) => {
+            this.collection.batch([
+                this.model1,
+                this.model2,
+                this.model3
+            ]);
+
+            var models = this.collection.range(4, 10);
+            expect(models.length).toBe(0);
+            done();
+        });
+    });
+
+    describe('.at(idx)', () => {
+        beforeEach(() => {
+            this.model1 = modelBuilder({a: 1});
+            this.model2 = modelBuilder({a: 1});
+            this.model3 = modelBuilder({b: 1});
+        });
+
+        it('should be defined', (done) => {
+            expect(this.collection.at).toBeDefined();
+            done();
+        });
+
+        it('should return the model at the specified index', (done) => {
+            this.collection.batch([
+                this.model1,
+                this.model2,
+                this.model3
+            ]);
+
+            var model = this.collection.at(0);
+            expect(model).toBeDefined();
+            expect(model._id).toBe(0);
+            done();
+        });
+
+        it('should return undefined if no matches', (done) => {
+            this.collection.batch([
+                this.model1,
+                this.model2,
+                this.model3
+            ]);
+
+            var model = this.collection.at(3);
+            expect(model).not.toBeDefined();
+            done();
+        });
+    });
+
+    describe('.count()', () => {
+        beforeEach(() => {
+            this.model1 = modelBuilder({ a: 1 });
+            this.model2 = modelBuilder({ a: 1 });
+            this.model3 = modelBuilder({ b: 1 });
+        });
+
+        it('should be defined', (done) => {
+            expect(this.collection.count).toBeDefined();
+            done();
+        });
+
+        it('should return count of models in collection', (done) => {
+            this.collection.batch([
+                this.model1,
+                this.model2,
+                this.model3
+            ]);
+            expect(this.collection.count()).toEqual(3);
             done();
         });
     });
@@ -373,7 +475,7 @@ describe('BehaveCollection', () => {
             done();
         });
 
-        it('should return array of objects containing each models data',
+        it('should return JSON representation of objects containing each models data',
                 (done) => {
 
             this.collection.batch([
